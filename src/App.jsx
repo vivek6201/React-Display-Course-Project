@@ -9,6 +9,7 @@ import Spinner from "./Components/Spinner";
 function App() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [category,setCategory] = useState("All");
 
   useEffect(() => {
     fetchCards();
@@ -32,9 +33,9 @@ function App() {
   return (
     <div className="w-full min-h-screen bg-gray-700">
       <Navbar />
-      <Filter />
+      <Filter category = {category} setCategory = {setCategory}/>
       <div className="max-w-[1300px] w-[90%] h-full mx-auto">
-        {loading ? <Spinner /> : <Cards courses={courses} />}
+        {loading ? <Spinner /> : <Cards courses={courses} category = {category}/>}
 
       </div>
     </div>
