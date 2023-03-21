@@ -6,8 +6,6 @@ const Filter = ({ category, setCategory, error}) => {
   const handleCategory = (title) => {
     setCategory(title);
   }
-
-  console.log(category);
   return (
     <div className="flex flex-wrap justify-center gap-5 py-6">
       {filterData.map((data) => {
