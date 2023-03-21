@@ -5,11 +5,15 @@ import Filter from "./Components/Filter";
 import Navbar from "./Components/Navbar";
 import { toast } from "react-toastify";
 import Spinner from "./Components/Spinner";
+import Error from "./Components/Error";
+import Card from "./Components/Card";
 
 function App() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [category,setCategory] = useState("All");
+  const [category, setCategory] = useState("All");
+  const [error, setError] = useState(false);
+  const [liked,setLiked] = useState([]);
 
   useEffect(() => {
     fetchCards();
@@ -24,7 +28,8 @@ function App() {
       const data = await res.json();
       setCourses(data.data);
     } catch (e) {
-      toast("Something Went Wrong!!!");
+      setError(true);
+      toast.error("Something Went Wrong!!!");
       console.log(e);
     }
     setLoading(false);
@@ -32,12 +37,20 @@ function App() {
 
   return (
     <div className="w-full min-h-screen bg-gray-700">
-      <Navbar />
-      <Filter category = {category} setCategory = {setCategory}/>
-      <div className="max-w-[1300px] w-[90%] h-full mx-auto">
-        {loading ? <Spinner /> : <Cards courses={courses} category = {category}/>}
+      <Navbar/>
+      <Filter category={category} setCategory={setCategory} error={error} />
 
-      </div>
+      {error ? (
+        <Error />
+      ) : (
+        <div className="max-w-[1300px] w-[90%] h-full mx-auto">
+          {loading ? (
+            <Spinner/>
+          ) : (
+            <Cards courses={courses} category={category} liked = {liked} setLiked={setLiked}/>
+          )}
+        </div>
+      )}
     </div>
   );
 }

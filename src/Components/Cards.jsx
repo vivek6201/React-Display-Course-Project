@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "./Card";
 
-const Cards = ({ courses, category }) => {
+const Cards = ({ courses, category, liked, setLiked }) => {
   
   const getCourseCard = () => {
     if (category === "All") {
@@ -21,8 +21,7 @@ const Cards = ({ courses, category }) => {
   return (
     <div className="flex py-5 gap-10 flex-wrap justify-center">
       {getCourseCard().map((course) => {
-        console.log(course);
-        return <Card {...course} />;
+        return <Card {...course} key={course.id} liked = {liked} setLiked = {setLiked}/>;
       })}
     </div>
   );
